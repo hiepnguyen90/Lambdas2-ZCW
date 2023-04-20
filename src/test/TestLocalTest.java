@@ -9,6 +9,8 @@ public class TestLocalTest {
 
         ArrayList<Person> people = new ArrayList<Person>();
 
+        CheckPerson check = (l) -> l.sex == Person.Sex.MALE;
+
         Person p = new Person("Fred", Person.Sex.MALE, "wethekutest@hotmail.com");
         people.add(p);
         people.add(new Person("Nona", Person.Sex.FEMALE, "cutegurl96@hotmail.com"));
@@ -16,7 +18,11 @@ public class TestLocalTest {
 
         String expected = p.printPerson();
 
-        String actual = PersonService.printPersons(people, new PersonChecker());
+        String actual = PersonService.printPersons(people, new Checkler(){
+            public boolean test(Person p){
+                return p.sex == Person.Sex.MALE;
+            }
+        };
         Assert.assertEquals(expected, actual);
     }
 }
